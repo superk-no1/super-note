@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import '../../../components/notes/note_list_item.dart';
 import '../../../models/note_model.dart';
-import '../../../widgets/notes/note_list_item.dart';
 import '../../../utils/date_formatter.dart';
 import '../../../utils/constants.dart';
 
 class MonthSection extends StatelessWidget {
   final DateTime date;
   final List<Note> notes;
+  final Function(Note)? onNoteTap;
 
   const MonthSection({
     super.key,
     required this.date,
     required this.notes,
+    this.onNoteTap,
   });
 
   @override
@@ -54,9 +56,7 @@ class MonthSection extends StatelessWidget {
             ),
             itemBuilder: (context, index) => NoteListItem(
               note: notes[index],
-              onTap: () {
-                // TODO: 处理笔记点击事件
-              },
+              onTap: () => onNoteTap?.call(notes[index]),
             ),
           ),
         ),
