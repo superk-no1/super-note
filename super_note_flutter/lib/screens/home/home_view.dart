@@ -7,6 +7,7 @@ import '../../providers/notes/notes_provider.dart';
 import '../../utils/constants.dart';
 import 'components/month_section.dart';
 import '../../providers/providers.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -136,8 +137,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               date: date,
               notes: groupedNotes[date]!,
               onNoteTap: (note) {
-                // TODO: 实现笔记详情页面后再添加导航
-                // context.push(AppRoutes.noteDetailPath(note.id));
+                context.push('/edit/${note.id}');
               },
             );
           }).toList(),

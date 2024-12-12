@@ -2,14 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'routes/router.dart';
 import 'theme/app_theme.dart';
-import 'config/app_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'services/storage_service.dart';
 
-void main() {
-  AppConfig.environment = Environment.dev;
+// 创建一个全局 provider 来存储 StorageService
+final storageServiceProvider =
+    Provider<StorageService>((ref) => throw UnimplementedError());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final storageService = StorageService(prefs);
 
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      overrides: [
+        storageServiceProvider.overrideWithValue(storageService),
+      ],
+      child: const MyApp(),
     ),
   );
 }
